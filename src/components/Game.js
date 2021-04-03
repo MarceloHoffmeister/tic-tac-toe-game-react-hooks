@@ -1,6 +1,18 @@
 import React, { useState } from 'react'
+import ReloadButton from './ReloadButton';
 import Board from './Board'
 import {calculateWinner} from "../helper";
+
+const startButton = {
+    listStyle: 'none'
+}
+
+const resultStyle = {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    width: '250px'
+}
 
 const Game = () => {
     const [history, setHistory] = useState([Array(9).fill(null)])
@@ -22,16 +34,21 @@ const Game = () => {
     }
 
     const jumpTo = step => {
+        step === 0 && setHistory([Array(9).fill(null)])
         setStepNumber(step)
         setXIsNext(step % 2 === 0)
     }
 
     const renderMoves = () => (
         history.map((_step, move) => {
-            const destination = move ? `Go to move#${move}` : 'Go to start'
+            const destination = !move ? null : `Go to movement#${move}`
             return (
-                <li key={move}>
-                    <button onClick={() => jumpTo(move)}>{destination}</button>
+                <li style={startButton} key={move}>
+                    {
+                        !destination ?
+                        null :
+                        <button style={{marginBottom: '5px'}} onClick={() => jumpTo(move)}>{destination}</button>
+                    }
                 </li>
             )
         })
@@ -40,7 +57,8 @@ const Game = () => {
     return (
         <>
             <Board squares={history[stepNumber]} onClick={handleClick} />
-            <div>
+            <div style={resultStyle}>
+                <ReloadButton size='32' onClick={() => jumpTo(0)}/>
                 <p>{winner ? `Winner: ${winner}` : `Next Player: ${xIsNext ? 'X' : 'O'}`}</p>
                 {renderMoves()}
             </div>
