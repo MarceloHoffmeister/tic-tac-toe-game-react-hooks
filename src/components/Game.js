@@ -21,12 +21,20 @@ const Game = () => {
 
     }
 
-    const renderMove = () => {
-
+    const renderMoves = () => {
+        return <button onClick={() => setBoard(Array(9).fill(null))}>
+            Start Game
+        </button>
     }
 
     return (
-        <Board squares={board} onClick={handleClick} />
+        <>
+            <Board squares={board} onClick={handleClick} />
+            <div>
+                <p>{winner ? `Winner: ${winner}` : `Next Player: ${xIsNext ? 'X' : 'O'}`}</p>
+                {renderMoves()}
+            </div>
+        </>
     )
 }
 

@@ -14,7 +14,7 @@ const style = {
 const Board = ({ squares, onClick }) => (
     <div style={style}>
         {squares.map((square, index) => (
-            <Square key={index} value={square} onClick={() => onclick(index)} />
+            <Square key={index} value={square} onClick={() => onClick(index)} />
         ))}
     </div>
 )
